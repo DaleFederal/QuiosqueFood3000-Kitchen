@@ -1,0 +1,93 @@
+# JetBrains Rider
+.idea/
+*.sln.iml
+.idea/httpRequests
+.idea/caches/build_file_checksums.ser
+.idea/.cache/.Apifox_Helper
+.idea/ApifoxUploaderProjectSetting.xml
+.idea/logs/
+
+# VS Code
+.vscode/
+
+# .NET build artifacts
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+x86/
+[Aa][Rr][Mm]*/
+bld/
+artifacts/
+project.lock.json
+project.fragment.lock.json
+ScaffoldingReadMe.txt
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Test results and coverage
+TestResults/
+[Tt]est[Rr]esult*/
+CodeCoverage/
+*.binlog
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Windows/Mac/Linux system files
+Thumbs.db
+Desktop.ini
+.DS_Store
+.Trash-*
+
+# dotCover
+.idea/.dotCover
+
+# Windsurf
+.windsurf/
+.windsurf-cache/
+.windsurf-local/
+wind.log
+wind-debug.log
+wind-output/
+wind-temp/
+
+# Docker
+**/docker-compose.override.yml
+**/docker-compose.local.yml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Ignore local environment files
+.env
+.env.*
+
+# Editor-based HTTP Client
+http-client.private.env.json
+
+# Android studio
+.idea/caches/build_file_checksums.ser
+
+# Apifox
+.idea/.cache/.Apifox_Helper
+.idea/ApifoxUploaderProjectSetting.xml

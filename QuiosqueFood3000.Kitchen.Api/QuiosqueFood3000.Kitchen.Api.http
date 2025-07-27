@@ -1,0 +1,6 @@
+@QuiosqueFood3000.Kitchen.Api_HostAddress = http://localhost:5001
+
+GET {{QuiosqueFood3000.Kitchen.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

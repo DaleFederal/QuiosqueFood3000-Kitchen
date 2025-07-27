@@ -1,0 +1,19 @@
+# Example Terraform variables file
+# Copy this file to terraform.tfvars and update the values
+
+aws_region    = "us-east-1"
+project_name  = "QuiosqueFood3000Kitchen"
+environment   = "production"
+vpc_cidr      = "10.0.0.0/16"
+
+# MongoDB connection string (replace with your actual connection string)
+mongodb_connection_string = "mongodb+srv://username:password@cluster.mongodb.net/QuiosqueFood3000Kitchen?retryWrites=true&w=majority"
+
+# Container configuration
+container_cpu    = 512
+container_memory = 1024
+app_count        = 2
+container_port   = 8080
+
+# Health check configuration
+health_check_grace_period_seconds = 30

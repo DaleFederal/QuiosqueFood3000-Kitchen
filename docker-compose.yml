@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # .NET Kitchen API Application
+  kitchen-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quiosquefood3000-kitchen-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_DEFAULT_REGION=us-east-1
+      - DynamoDB__ServiceURL=http://dynamodb-local:8000
+      - DynamoDB__OrderSolicitationTableName=OrderSolicitations
+    depends_on:
+      - dynamodb-local
+    networks:
+      - quiosquefood3000-network
+    restart: unless-stopped
+
+  # DynamoDB Local
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: quiosquefood3000-dynamodb-local
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-inMemory"]
+    networks:
+      - quiosquefood3000-network
+    restart: unless-stopped
+
+  # DynamoDB Admin (Optional - Web-based DynamoDB admin interface)
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    container_name: quiosquefood3000-dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb-local:8000
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+    depends_on:
+      - dynamodb-local
+    networks:
+      - quiosquefood3000-network
+    restart: unless-stopped
+
+networks:
+  quiosquefood3000-network:
+    driver: bridge
