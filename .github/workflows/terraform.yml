@@ -64,7 +64,6 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'plan')
       run: |
         terraform plan -no-color -input=false -out=tfplan
       continue-on-error: true
@@ -76,7 +75,6 @@ jobs:
 
     # On push to "main", build or change infrastructure according to Terraform configuration files
     - name: Terraform Apply
-      if: (github.event_name == 'pull_request') || (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply')
       run: terraform apply -auto-approve -input=false
 
     # Terraform Destroy (manual trigger only)
