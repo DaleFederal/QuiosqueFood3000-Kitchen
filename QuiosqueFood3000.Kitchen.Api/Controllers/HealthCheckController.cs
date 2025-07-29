@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace QuiosqueFood3000.Kitchen.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/health")]
 public class HealthCheckController : ControllerBase
 {
     [HttpGet]

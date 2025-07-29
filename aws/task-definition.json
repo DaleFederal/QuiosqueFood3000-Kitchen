@@ -25,9 +25,12 @@
         {
           "name": "ASPNETCORE_URLS",
           "value": "http://+:8080"
+        },
+        {
+          "name": "TableName",
+          "value": "QuiosqueFood3000-Kitchen"
         }
       ],
-
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
