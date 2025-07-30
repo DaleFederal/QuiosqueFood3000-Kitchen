@@ -43,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DaleFederal_QuiosqueFood3000-Kitchen" /o:"dalefederal" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/TestResults/TestResults.trx" /d:sonar.cs.cobertura.reportsPaths="${{ github.workspace }}/TestResults/coverage.cobertura.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DaleFederal_QuiosqueFood3000-Kitchen" /o:"dalefederal" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/TestResults/TestResults.trx" /d:sonar.cs.cobertura.reportsPaths="${{ github.workspace }}/TestResults/coverage.cobertura.xml" /d:sonar.verbose=true
           
           dotnet build --configuration Release
           
