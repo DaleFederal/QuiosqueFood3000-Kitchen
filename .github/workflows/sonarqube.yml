@@ -55,3 +55,10 @@ jobs:
         shell: powershell
         run: |
           Get-ChildItem -Path "${{ github.workspace }}/TestResults" -Recurse
+          $coverageFile = Get-ChildItem -Path "${{ github.workspace }}/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          if ($coverageFile) {
+            Write-Host "Coverage file found at: $($coverageFile.FullName)"
+            Get-Content -Path $coverageFile.FullName
+          } else {
+            Write-Host "Coverage file not found!"
+          }
