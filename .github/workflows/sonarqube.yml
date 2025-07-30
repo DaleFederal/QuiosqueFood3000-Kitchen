@@ -39,26 +39,18 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: Build and analyze
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DaleFederal_QuiosqueFood3000-Kitchen" /o:"dalefederal" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="${{ github.workspace }}/TestResults/TestResults.trx" /d:sonar.cs.cobertura.reportsPaths="${{ github.workspace }}/TestResults/**/coverage.cobertura.xml" /d:sonar.verbose=true
+          # Início da análise do SonarQube com configurações de cobertura
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"DaleFederal_QuiosqueFood3000-Kitchen" /o:"dalefederal" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="**/TestResults/**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**/*Tests*/**,**/Program.cs,**/Startup.cs"
           
+          # Build do projeto
           dotnet build --configuration Release
           
-          dotnet test --no-build --configuration Release --settings .runsettings --collect:"XPlat Code Coverage" --results-directory "${{ github.workspace }}/TestResults" --logger:"trx;LogFileName=TestResults.trx"
+          # Execução dos testes com cobertura
+          dotnet test --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory "TestResults" --logger "trx" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           
+          # Finalização da análise
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-      - name: List TestResults directory for debugging
-        if: always()
-        shell: powershell
-        run: |
-          Get-ChildItem -Path "${{ github.workspace }}/TestResults" -Recurse
-          $coverageFile = Get-ChildItem -Path "${{ github.workspace }}/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
-          if ($coverageFile) {
-            Write-Host "Coverage file found at: $($coverageFile.FullName)"
-            Get-Content -Path $coverageFile.FullName
-          } else {
-            Write-Host "Coverage file not found!"
-          }
